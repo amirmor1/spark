@@ -7452,6 +7452,13 @@ object functions {
   def array_size(e: Column): Column = Column.fn("array_size", e)
 
   /**
+   * Returns true if the array is empty or null.
+   * @group array_funcs
+   * @since 3.5.0
+   */
+  def is_array_empty(e: Column): Column = array_size(e) < 1
+
+  /**
    * Aggregate function: returns a list of objects with duplicates.
    *
    * @note

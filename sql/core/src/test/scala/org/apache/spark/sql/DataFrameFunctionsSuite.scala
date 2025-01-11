@@ -2028,6 +2028,18 @@ class DataFrameFunctionsSuite extends QueryTest with SharedSparkSession {
     checkAnswer(df.selectExpr("array_size(a)"), answer)
   }
 
+  test("is_array_empty function") {
+    val df = Seq(
+      Seq[Option[Int]](Some(1), Some(3), Some(2)),
+      Seq.empty[Option[Int]],
+      null,
+      Seq[Option[Int]](None, Some(1))
+    ).toDF("a")
+    val answer = Seq(Row(false), Row(true), Row(true), Row(false))
+    checkAnswer(df.select(is_array_empty(df("a"))), answer)
+    checkAnswer(df.selectExpr("is_array_empty(a)"), answer)
+  }
+
   test("cardinality function") {
     val df = Seq(
       Seq[Option[Int]](Some(1), Some(3), Some(2)),
